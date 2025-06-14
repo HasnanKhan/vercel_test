@@ -1,28 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do You FW Me?</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Responsive Moving Button</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      text-align: center;
+      border: 2px solid black;
+      padding: 40px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+    }
+
+    button {
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+  </style>
 </head>
 <body>
-    <div></div>
-    <div class="container">
-        <h1>Do You FW Me?</h1>
-        <div class="button-group">
-            <button class="button-85" role="button" onclick="yesButton()">Yes</button>
-            <button class="button-85" role="button" id="no">No</button>
-        </div>
+  <div class="container">
+    <h1>Do you agree?</h1>
+    <div class="button-group">
+      <button class="button-85">Yes</button>
+      <button class="button-85" id="no">No</button>
     </div>
-    <script>
-        function yesButton() {
-            alert("Good");
-        }
-        const noButton = document.getElementById("no");
-        let isMoving = false;
+  </div>
 
-        function moveButton() {
+  <script>
+    const noButton = document.getElementById("no");
+
+    function moveButton() {
       const maxX = window.innerWidth - noButton.offsetWidth;
       const maxY = window.innerHeight - noButton.offsetHeight;
 
@@ -34,13 +58,17 @@
       noButton.style.top = `${newTop}px`;
     }
 
-    // Desktop: move on hover
-    if (window.innerWidth > 768) {
-      noButton.addEventListener("mouseenter", moveButton);
-    } else {
-      // Mobile: move automatically every 2 seconds
-      setInterval(moveButton, 2000);
+    function isMobileDevice() {
+      return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
-    </script>
+
+    if (isMobileDevice()) {
+      // On mobile: move every 2 seconds
+      setInterval(moveButton, 2000);
+    } else {
+      // On desktop: move only when hovered
+      noButton.addEventListener("mouseenter", moveButton);
+    }
+  </script>
 </body>
 </html>
