@@ -2,50 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Responsive Moving Button</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Do You FW Me?</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Do you agree?</h1>
-    <div class="button-group">
-      <button class="button-85">Yes</button>
+    <h1>Do You FW Me?</h1>
+    <div class="button-group" id="buttonGroup">
+      <button class="button-85" onclick="yesButton()">Yes</button>
+      <button class="button-85" id="no">No</button>
     </div>
   </div>
 
-  <button class="button-85" id="no">No</button>
-
   <script>
+    function yesButoon(){
+        alert("Good")
+    }
     const noButton = document.getElementById("no");
-
+  
     function moveButton() {
       const maxX = window.innerWidth - noButton.offsetWidth;
       const maxY = window.innerHeight - noButton.offsetHeight;
-
+  
       const newLeft = Math.floor(Math.random() * maxX);
       const newTop = Math.floor(Math.random() * maxY);
-
+  
       noButton.style.left = `${newLeft}px`;
       noButton.style.top = `${newTop}px`;
     }
-
+  
     function isMobileDevice() {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
-
-    if (isMobileDevice()) {
-      // Keep moving forever using requestAnimationFrame
-      function loopMovement() {
-        moveButton();
+  
+    window.addEventListener("load", () => {
+      if (isMobileDevice()) {
+        // Wait for layout, then break out and start fast movement
         setTimeout(() => {
-          requestAnimationFrame(loopMovement);
-        }, 300); // Move every 300ms
+          const rect = noButton.getBoundingClientRect();
+          document.body.appendChild(noButton);
+          noButton.style.position = "absolute";
+          noButton.style.left = `${rect.left}px`;
+          noButton.style.top = `${rect.top}px`;
+  
+          // Start fast, continuous movement using requestAnimationFrame
+          function moveLoop() {
+            moveButton();
+            requestAnimationFrame(moveLoop); // as fast as browser allows (~60fps)
+          }
+  
+          moveLoop();
+        }, 300);
+      } else {
+        // Desktop hover behavior
+        noButton.addEventListener("mouseenter", () => {
+          const rect = noButton.getBoundingClientRect();
+          document.body.appendChild(noButton);
+          noButton.style.position = "absolute";
+          noButton.style.left = `${rect.left}px`;
+          noButton.style.top = `${rect.top}px`;
+          moveButton();
+        });
       }
-
-      loopMovement(); // start the loop
-    } else {
-      noButton.addEventListener("mouseenter", moveButton); // Desktop: hover to move
-    }
+    });
   </script>
+  
 </body>
 </html>
