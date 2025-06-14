@@ -26,8 +26,9 @@
     }
   
     function getRandomPosition() {
-      const maxX = window.innerWidth - noButton.offsetWidth;
-      const maxY = window.innerHeight - noButton.offsetHeight;
+      const padding = 20; // avoid edge clipping
+      const maxX = window.innerWidth - noButton.offsetWidth - padding;
+      const maxY = window.innerHeight - noButton.offsetHeight - padding;
       return {
         x: Math.floor(Math.random() * maxX),
         y: Math.floor(Math.random() * maxY)
@@ -36,7 +37,6 @@
   
     window.addEventListener("load", () => {
       if (isMobileDevice()) {
-        // Allow layout to settle
         setTimeout(() => {
           const rect = noButton.getBoundingClientRect();
           document.body.appendChild(noButton);
@@ -44,32 +44,35 @@
           noButton.style.position = "absolute";
           noButton.style.left = `${rect.left}px`;
           noButton.style.top = `${rect.top}px`;
-          noButton.style.transition = "transform 0.3s ease";
+          noButton.style.transition = "left 0.3s ease, top 0.3s ease";
   
           function smoothLoop() {
             const target = getRandomPosition();
-            noButton.style.transform = `translate(${target.x}px, ${target.y}px)`;
+            noButton.style.left = `${target.x}px`;
+            noButton.style.top = `${target.y}px`;
             setTimeout(() => requestAnimationFrame(smoothLoop), 300);
           }
   
           smoothLoop();
         }, 300);
       } else {
-        // Desktop hover behavior
         noButton.addEventListener("mouseenter", () => {
           const rect = noButton.getBoundingClientRect();
           document.body.appendChild(noButton);
+  
           noButton.style.position = "absolute";
           noButton.style.left = `${rect.left}px`;
           noButton.style.top = `${rect.top}px`;
-          noButton.style.transition = "transform 0.3s ease";
+          noButton.style.transition = "left 0.3s ease, top 0.3s ease";
   
           const target = getRandomPosition();
-          noButton.style.transform = `translate(${target.x}px, ${target.y}px)`;
+          noButton.style.left = `${target.x}px`;
+          noButton.style.top = `${target.y}px`;
         });
       }
     });
   </script>
+  
   
   
 </body>
