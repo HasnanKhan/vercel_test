@@ -23,28 +23,24 @@
         let isMoving = false;
 
         function moveButton() {
-            if (isMoving) return; // Prevent rapid re-triggering
-            isMoving = true;
+      const maxX = window.innerWidth - noButton.offsetWidth;
+      const maxY = window.innerHeight - noButton.offsetHeight;
 
-            const maxX = window.innerWidth - noButton.offsetWidth;
-            const maxY = window.innerHeight - noButton.offsetHeight;
+      const newLeft = Math.floor(Math.random() * maxX);
+      const newTop = Math.floor(Math.random() * maxY);
 
-            const newLeft = Math.floor(Math.random() * maxX);
-            const newTop = Math.floor(Math.random() * maxY);
+      noButton.style.position = "absolute";
+      noButton.style.left = `${newLeft}px`;
+      noButton.style.top = `${newTop}px`;
+    }
 
-            noButton.style.position = "absolute";
-            noButton.style.left = `${newLeft}px`;
-            noButton.style.top = `${newTop}px`;
-
-            // Allow future moves after short delay
-            setTimeout(() => {
-            isMoving = false;
-            }, 300); // adjust timing if needed
-        }
-
-        noButton.addEventListener("mouseenter", moveButton); // desktop
-        noButton.addEventListener("click", moveButton);
-
+    // Desktop: move on hover
+    if (window.innerWidth > 768) {
+      noButton.addEventListener("mouseenter", moveButton);
+    } else {
+      // Mobile: move automatically every 2 seconds
+      setInterval(moveButton, 2000);
+    }
     </script>
 </body>
 </html>
