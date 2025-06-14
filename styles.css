@@ -81,5 +81,7 @@ body {
     top: 0;
     border-radius: 10px;
   }
-  
+  #no {
+    transition: transform 0.3s ease;
+  }
   
