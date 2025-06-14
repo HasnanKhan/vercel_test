@@ -82,6 +82,5 @@ body {
     border-radius: 10px;
   }
   #no {
-    transition: transform 0.3s ease;
+    transition: left 0.3s ease, top 0.3s ease;
   }
-  
