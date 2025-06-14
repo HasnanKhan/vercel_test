@@ -15,43 +15,44 @@
   </div>
 
   <script>
-    function yesButoon(){
-        alert("Good")
+    function yesButton() {
+      alert("Good");
     }
+  
     const noButton = document.getElementById("no");
-  
-    function moveButton() {
-      const maxX = window.innerWidth - noButton.offsetWidth;
-      const maxY = window.innerHeight - noButton.offsetHeight;
-  
-      const newLeft = Math.floor(Math.random() * maxX);
-      const newTop = Math.floor(Math.random() * maxY);
-  
-      noButton.style.left = `${newLeft}px`;
-      noButton.style.top = `${newTop}px`;
-    }
   
     function isMobileDevice() {
       return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
   
+    function getRandomPosition() {
+      const maxX = window.innerWidth - noButton.offsetWidth;
+      const maxY = window.innerHeight - noButton.offsetHeight;
+      return {
+        x: Math.floor(Math.random() * maxX),
+        y: Math.floor(Math.random() * maxY)
+      };
+    }
+  
     window.addEventListener("load", () => {
       if (isMobileDevice()) {
-        // Wait for layout, then break out and start fast movement
+        // Allow layout to settle
         setTimeout(() => {
           const rect = noButton.getBoundingClientRect();
           document.body.appendChild(noButton);
+  
           noButton.style.position = "absolute";
           noButton.style.left = `${rect.left}px`;
           noButton.style.top = `${rect.top}px`;
+          noButton.style.transition = "transform 0.3s ease";
   
-          // Start fast, continuous movement using requestAnimationFrame
-          function moveLoop() {
-            moveButton();
-            requestAnimationFrame(moveLoop); // as fast as browser allows (~60fps)
+          function smoothLoop() {
+            const target = getRandomPosition();
+            noButton.style.transform = `translate(${target.x}px, ${target.y}px)`;
+            setTimeout(() => requestAnimationFrame(smoothLoop), 300);
           }
   
-          moveLoop();
+          smoothLoop();
         }, 300);
       } else {
         // Desktop hover behavior
@@ -61,11 +62,15 @@
           noButton.style.position = "absolute";
           noButton.style.left = `${rect.left}px`;
           noButton.style.top = `${rect.top}px`;
-          moveButton();
+          noButton.style.transition = "transform 0.3s ease";
+  
+          const target = getRandomPosition();
+          noButton.style.transform = `translate(${target.x}px, ${target.y}px)`;
         });
       }
     });
   </script>
+  
   
 </body>
 </html>
