@@ -29,6 +29,7 @@ body {
     padding: 10px 20px;
   }
   
+  /* Glow Button Styling */
   .button-85 {
     padding: 0.6em 2em;
     border: none;
@@ -36,16 +37,24 @@ body {
     color: white;
     background: #111;
     cursor: pointer;
+    border-radius: 10px;
     position: relative;
     z-index: 0;
-    border-radius: 10px;
     user-select: none;
     touch-action: manipulation;
-    transition: all 0.3s ease;
+    overflow: hidden;
+    will-change: top, left;
+    transition: left 0.3s ease, top 0.3s ease;
   }
   
-  .button-85:before {
+  .button-85::before {
     content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: -2px;
     background: linear-gradient(
       45deg,
       #ff0000,
@@ -58,35 +67,39 @@ body {
       #ff00c8,
       #ff0000
     );
-    position: absolute;
-    top: -2px;
-    left: -2px;
     background-size: 400%;
-    z-index: -1;
     filter: blur(5px);
-    width: calc(100% + 4px);
-    height: calc(100% + 4px);
+    z-index: -1;
+    border-radius: inherit;
     animation: glowing-button-85 20s linear infinite;
-    border-radius: 10px;
   }
   
-  .button-85:after {
-    z-index: -1;
+  .button-85::after {
     content: "";
     position: absolute;
     width: 100%;
     height: 100%;
     background: #222;
-    left: 0;
     top: 0;
+    left: 0;
+    z-index: -2;
     border-radius: 10px;
   }
+  
+  @keyframes glowing-button-85 {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+  /* "No" button transition (syncs movement) */
   #no {
     transition: left 0.3s ease, top 0.3s ease;
   }
-  @media (max-width: 768px) {
-    #no::before {
-      animation: none !important;
-      opacity: 0 !important;
-    }
-  }
+  
