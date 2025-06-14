@@ -84,3 +84,9 @@ body {
   #no {
     transition: left 0.3s ease, top 0.3s ease;
   }
+  @media (max-width: 768px) {
+    #no::before {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+  }
