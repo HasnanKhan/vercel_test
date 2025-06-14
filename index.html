@@ -20,18 +20,26 @@
             alert("Good");
         }
         const noButton = document.getElementById("no");
+        let isMoving = false;
 
-        
         function moveButton() {
-        const maxX = window.innerWidth - noButton.offsetWidth;
-        const maxY = window.innerHeight - noButton.offsetHeight;
+            if (isMoving) return; // Prevent rapid re-triggering
+            isMoving = true;
 
-        const newLeft = Math.floor(Math.random() * maxX);
-        const newTop = Math.floor(Math.random() * maxY);
+            const maxX = window.innerWidth - noButton.offsetWidth;
+            const maxY = window.innerHeight - noButton.offsetHeight;
 
-        noButton.style.position = "absolute";
-        noButton.style.left = `${newLeft}px`;
-        noButton.style.top = `${newTop}px`;
+            const newLeft = Math.floor(Math.random() * maxX);
+            const newTop = Math.floor(Math.random() * maxY);
+
+            noButton.style.position = "absolute";
+            noButton.style.left = `${newLeft}px`;
+            noButton.style.top = `${newTop}px`;
+
+            // Allow future moves after short delay
+            setTimeout(() => {
+            isMoving = false;
+            }, 300); // adjust timing if needed
         }
 
         noButton.addEventListener("mouseenter", moveButton); // desktop
