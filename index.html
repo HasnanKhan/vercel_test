@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You FW Me?</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div></div>
+    <div class="container">
+        <h1>Do You FW Me?</h1>
+        <div class="button-group">
+            <button class="button-85" role="button" onclick="yesButton()">Yes</button>
+            <button class="button-85" role="button" id="no">No</button>
+        </div>
+    </div>
+    <script>
+        function yesButton() {
+            alert("Good");
+        }
+        const noButton = document.getElementById("no");
+
+        
+        function moveButton() {
+        const maxX = window.innerWidth - noButton.offsetWidth;
+        const maxY = window.innerHeight - noButton.offsetHeight;
+
+        const newLeft = Math.floor(Math.random() * maxX);
+        const newTop = Math.floor(Math.random() * maxY);
+
+        noButton.style.position = "absolute";
+        noButton.style.left = `${newLeft}px`;
+        noButton.style.top = `${newTop}px`;
+        }
+
+        noButton.addEventListener("mouseenter", moveButton); // desktop
+        noButton.addEventListener("click", moveButton);
+
+    </script>
+</body>
+</html>
