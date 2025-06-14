@@ -42,7 +42,7 @@ body {
     z-index: 0;
     user-select: none;
     touch-action: manipulation;
-    overflow: hidden;
+    overflow: visible; /* allow glow to show outside */
     will-change: top, left;
     transition: left 0.3s ease, top 0.3s ease;
   }
@@ -50,11 +50,11 @@ body {
   .button-85::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: -2px;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: inherit;
     background: linear-gradient(
       45deg,
       #ff0000,
@@ -68,9 +68,8 @@ body {
       #ff0000
     );
     background-size: 400%;
-    filter: blur(5px);
+    filter: blur(8px);
     z-index: -1;
-    border-radius: inherit;
     animation: glowing-button-85 20s linear infinite;
   }
   
@@ -98,7 +97,7 @@ body {
     }
   }
   
-  /* "No" button transition (syncs movement) */
+  /* "No" button movement transition */
   #no {
     transition: left 0.3s ease, top 0.3s ease;
   }
